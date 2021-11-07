@@ -2,21 +2,25 @@
     --hover_color: #3370ff;
 } */
 
+/* 取消默认列表有点的样式 */
 ul,
 li {
     list-style: none;
 }
 
+/* 取消下划线 */
 a {
     text-decoration: none;
     /* outline: none; */
 }
+
 /* a, a:hover, a:active, a:visited, a:link, a:focus {
     text-decoration: none;
     outline: none;
     background: none;
 } */
 
+/* 取消默认样式的边距 */
 body,
 ul,
 li,
