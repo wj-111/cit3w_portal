@@ -23,7 +23,7 @@
 
 <script>
 export default {
-    name: 'header',
+    name: 'Header',
     data() {
         return {
             msg: "这是关于我们",

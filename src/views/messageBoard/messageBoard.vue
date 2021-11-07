@@ -4,15 +4,18 @@
         <div class="page">
             <h1>{{ msg }}</h1>
         </div>
+        <AwFooter></AwFooter>
     </div>
 </template>
 
 <script>
-import AwHeader from '../../publicComponents/header.vue'
+import AwHeader from '../../publicComponents/Header'
+import AwFooter from '../../publicComponents/Footer'
 export default {
     name: "messageBoard",
     components: {
-        AwHeader
+        AwHeader,
+        AwFooter
     },
     data() {
         return {
