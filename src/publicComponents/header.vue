@@ -80,7 +80,6 @@ h2 {
 .header {
     width: 100%;
     height: 60px;
-    background-color: rgba(0, 0, 0, 0.5);
     //backdrop-filter: blur(0);
     box-shadow: none;
 
