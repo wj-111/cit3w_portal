@@ -3,9 +3,10 @@
         <AwHeader class="aboutUs_header" ref="aboutUs_header"></AwHeader>
         <Banner :BannerHeight="BannerHeight"></Banner>
         <OverLay></OverLay>
-        <div class="page">
+        <!-- <div class="page">
             <h1>{{ msg }}</h1>
-        </div>
+        </div> -->
+        <ServerComponent></ServerComponent>
         <AwFooter></AwFooter>
     </div>
 </template>
@@ -13,6 +14,7 @@
 <script>
 import Banner from './Banner'
 import OverLay from './OverLay'
+import ServerComponent from './ServerComponent'
 import AwHeader from '../../publicComponents/Header'
 import AwFooter from '../../publicComponents/Footer'
 export default {
@@ -21,7 +23,8 @@ export default {
         AwHeader,
         AwFooter,
         Banner,
-        OverLay
+        OverLay,
+        ServerComponent
     },
     data() {
         return {
