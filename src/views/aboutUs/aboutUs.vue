@@ -1,9 +1,9 @@
 <template>
     <div class="index">
         <AwHeader class="aboutUs_header" ref="aboutUs_header"></AwHeader>
-        <div class="page">
-            <h1>{{ msg }}</h1>
-        </div>
+
+        <div class="banner">和优秀的人，做有挑战的事</div>
+
         <AwFooter></AwFooter>
     </div>
 </template>
@@ -26,8 +26,22 @@ export default {
 </script>
 
 
-<style scoped>
+<style lang = "less" scoped>
+/* @import "../../assets/style/variable.less"; */
 .page {
     padding-top: 60px;
+}
+.banner {
+    height: 400px;
+    line-height: 400px;
+    color: #fff;
+    width: 100%;
+    min-width: @main-width;
+    background-image: url("//sf1-ttcdn-tos.pstatp.com/obj/ttfe/ATSX/mainland/joblistbanner2x.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    text-align: center;
+    font-size: @font-size-larger;
 }
 </style>
