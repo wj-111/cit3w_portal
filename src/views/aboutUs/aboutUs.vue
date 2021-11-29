@@ -1,21 +1,24 @@
 <template>
     <div class="index">
-        <AwHeader class="aboutUs_header" ref="aboutUs_header"></AwHeader>
+        <PublicHeader class="aboutUs_header"></PublicHeader>
 
         <div class="banner">和优秀的人，做有挑战的事</div>
+        <AboutUsContent></AboutUsContent>
 
-        <AwFooter></AwFooter>
+        <PublicFooter></PublicFooter>
     </div>
 </template>
 
 <script>
-import AwHeader from '../../publicComponents/Header'
-import AwFooter from '../../publicComponents/Footer'
+import PublicHeader from '../../publicComponents/Header'
+import PublicFooter from '../../publicComponents/Footer'
+import AboutUsContent from './AboutUsContent'
 export default {
     name: "aboutUs",
     components: {
-        AwHeader,
-        AwFooter
+        PublicHeader,
+        PublicFooter,
+        AboutUsContent
     },
     data() {
         return {
@@ -27,7 +30,6 @@ export default {
 
 
 <style lang = "less" scoped>
-/* @import "../../assets/style/variable.less"; */
 .page {
     padding-top: 60px;
 }

@@ -1,6 +1,6 @@
 <template>
     <div class="index">
-        <AwHeader class="aboutUs_header" ref="aboutUs_header"></AwHeader>
+        <AwHeader class="aboutUs_header"></AwHeader>
         <Banner :BannerHeight="BannerHeight"></Banner>
         <OverLay></OverLay>
         <!-- <div class="page">
@@ -31,9 +31,6 @@ export default {
             msg: "这是首页",
             BannerHeight: '',
         };
-    },
-    mounted() {
-        alert('原通行证系练习用途，有法律风险，临时迁移至cit3w.cn:8080，将于11月20日24:00关闭');
     }
 };
 </script>
