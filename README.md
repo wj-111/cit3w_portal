@@ -18,4 +18,17 @@ npm run build
 npm run build --report
 ```
 
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+开发过程中用到的控制台命令
+
+2021.11.20: 
+npm i sass-resources-loader -D
+
+
+
+
+
+
+
+
+
+
