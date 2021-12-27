@@ -12,14 +12,16 @@
                 <h2>© 2020-2021 CIT 3W&nbsp;技术型社团</h2>
                 <h2>X公网安备 <a class="to_gong_an" href="http://beian.miit.gov.cn/" target="_blank">xxxxxxxxxxxxxx</a>号 I 苏ICP备2021035160号-1</h2>
             </div>
+
             <div class="about_us footer-content-column">
                 <h2>关于我们</h2>
                 <ul class="about_list">
                     <li>
-                        <router-link to="/job" target="_blank">企业文化</router-link>
+                        <router-link to="/job" target="_blank">社团文化</router-link>
                     </li>
                 </ul>
             </div>
+
             <div class="contact_us footer-content-column">
                 <h2>联系我们</h2>
                 <ul class="contact_list">
@@ -28,6 +30,7 @@
                     </li>
                 </ul>
             </div>
+
             <div class="focus_us footer-content-column">
                 <h2>实时动态与招聘信息，扫码关注我们</h2>
                 <div class="media">
@@ -42,6 +45,7 @@
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 </template>

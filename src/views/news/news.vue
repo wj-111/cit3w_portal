@@ -1,179 +1,208 @@
 <template>
     <div class="news">
         <AwHeader class="news-header" ref="news-header"></AwHeader>
-        <div class="page">
-            <div class="news-banner">
-                <div class="banner-title">
-                    <h2>新视野</h2>
-                    <h3>了解更多新闻</h3>
-                </div>
-                <el-autocomplete class="search-news" popper-class="my-autocomplete" highlight-first-item v-model="searchNews" clearable
-                                 ref="autocomplete" @focus="autocompleteFlag=true" @blur="autocompleteFlag=false" @clear="searchHandle"
-                                 :fetch-suggestions="querySearchAsync" placeholder="请输入新闻关键词" :trigger-on-focus="false">
-                    <i slot="prefix" class="el-input__icon el-icon-search"></i>
-                    <template slot-scope="{ item }">
-                        <router-link to="/">
-                            <div class="name" v-html="item.newsTitle"></div>
-                        </router-link>
-                    </template>
-                </el-autocomplete>
+        <TitleSearch></TitleSearch>
 
+        <div class="news-container">
+            <NewsCard></NewsCard>
+
+            <div class="news-list">
+                <el-tabs class="list-left" v-model="pageInfo.activeName" @tab-click="handleClick">
+                    <el-tab-pane :label="newsTabs[0].name" :name="newsTabs[0].id">
+                        <news-list :items="newsItems.list" v-if="pageInfo.activeName===newsTabs[0].id"></news-list>
+                    </el-tab-pane>
+                    <el-tab-pane :label="newsTabs[1].name" :name="newsTabs[1].id">
+                        <news-list :items="newsItems.list" v-if="pageInfo.activeName===newsTabs[1].id"></news-list>
+                    </el-tab-pane>
+                    <el-tab-pane :label="newsTabs[2].name" :name="newsTabs[2].id">
+                        <news-list :items="newsItems.list" v-if="pageInfo.activeName===newsTabs[2].id"></news-list>
+                    </el-tab-pane>
+                    <!-- <el-pagination class="pagination" background @current-change="handleCurrentChange" :current-page.sync="pageInfo.pagenum"
+                                   :page-size="pageInfo.pagesize" layout="prev, pager, next, jumper" :total="newsItems.total"
+                                   :hide-on-single-page="singlePage"
+                                   v-scroll-to="{ element: '.news-container',duration: 300, easing: 'ease',offset: -40  }">
+                    </el-pagination> -->
+                </el-tabs>
+                <!-- <div class="list-right">
+                    <div class="search-by-date">
+                        <p>按日期搜索：</p>
+                        <el-date-picker v-model="pageInfo.selectDate" type="month" placeholder="选择日期" value-format="yyyy-MM"
+                                        @change="searchByDate(pageInfo.selectDate)">
+                        </el-date-picker>
+                    </div>
+                    <hot-news></hot-news>
+                </div> -->
             </div>
         </div>
+
         <AwFooter></AwFooter>
     </div>
 </template>
-
 <script>
 import AwHeader from '../../publicComponents/Header'
 import AwFooter from '../../publicComponents/Footer'
+import TitleSearch from './TitleSearch'
+import NewsCard from './NewsCard'
 export default {
     name: "news",
     components: {
         AwHeader,
-        AwFooter
+        AwFooter,
+        TitleSearch,
+        NewsCard
     },
     data() {
         return {
-            searchNews: '',
-            msg: "这是新闻页",
-            autocompleteFlag: false,
-            // 关键词搜索新闻
-            searchList: []
+            newsTabs: [
+                {
+                    id: '1',
+                    name: '最新动态'
+                },
+                {
+                    id: '2',
+                    name: '典型案例'
+                },
+                {
+                    id: '3',
+                    name: '通知公告'
+                }
+            ],
+            newsItems: {},
+            pageInfo: {
+                activeName: '1',
+                // 当前页码
+                pagenum: 1,
+                // 当前每页显示多少条数据
+                pagesize: 10,
+                selectDate: ''
+            },
         };
     },
     methods: {
-        // 关键词搜索新闻
-        async querySearchAsync(queryString, cb) {
-            this.searchList = []
-
-            let res = await this.$http.get('/article/fuzzySearch?pageNum=1&pageSize=14&search=' + queryString)
-            if (res.status !== 200) {
-            } else {
-                // this.$message.success('获取成功')
-                const record = res.data.data.records
-                for (const iterator of record) {
-                    let tempData = {}
-                    tempData.newsTitle = iterator.articleTitle
-                    this.searchList.push(tempData)
-                }
-            }
-
-            const newHtml = `<span style="color: #3370ff">${queryString}</span>`
-
-            this.searchList.forEach(item => {
-                // console.log(item)
-                item.newsTitle = item.newsTitle.replace(queryString, newHtml)
-                // item.news_desc = item.news_desc.replace(queryString, newHtml)
-                // item.news_desc = item.news_desc.replace(queryString, newHtml)
-            })
-
-            clearTimeout(this.timeout)
-            this.timeout = setTimeout(() => {
-                console.log(this.searchList)
-                cb(this.searchList)
-            }, 1000 * Math.random())
-
+        handleClick(tab, event) {
+            this.getNewsItems()
         },
 
-
-        // 解决 clearable 搜索框后再次输入不显示下拉
-        searchHandle() {
-            if (this.autocompleteFlag) this.$refs.autocomplete.activated = true
+        // 获取新闻
+        async getNewsItems() {
+            this.newsItems = {}
+            // const { data: res } = await this.$http.get('/article/fuzzySearch?pageNum=1&pageSize=14&search=' + queryString)
+            // if (res.status !== 200) {
+            //     this.newsItems = {}
+            // } else {
+            //     // this.$message.success('获取成功')
+            //     this.newsItems = res.data
+            //     if (this.newsItems.total <= this.newsItems.limit) {
+            //         this.singlePage = true
+            //     }
+            // }
         },
+
     }
 };
 </script>
 
 <style lang="less" scoped>
-@hover_color: #3370ff;
 * {
     margin: 0;
     padding: 0;
 }
 
-// 下拉列表样式
-// .my-autocomplete {
-//     li {
-//         line-height: normal;
-//         padding: 7px;
+.news-container {
+    max-width: 1200px;
+    //background: #d3dce6;
+    min-height: 580px;
+    margin: 0 auto;
 
-//         .name {
-//             text-overflow: ellipsis;
-//             overflow: hidden;
-//         }
+    //   .news-list {
+    //     position: relative;
+    //     display: flex;
+    //     justify-content: space-between;
+    //   }
 
-//         .desc {
-//             font-size: 12px;
-//             color: #b4b4b4;
-//         }
+    //   .news-list:after {
+    //     content: "";
+    //     position: absolute;
+    //     left: 0;
+    //     top: 43px;
+    //     width: 100%;
+    //     height: 2px;
+    //     background-color: #E4E7ED;
+    //     z-index: 1;
+    //   }
 
-//         &.highlighted {
-//             background: #edf6ff !important;
-//         }
+    //   /deep/ .el-tabs__header {
+    //     height: 60px;
+    //   }
 
-//         .highlighted .addr {
-//             color: #ddd;
-//         }
-//     }
+    //   /deep/ .el-tabs__active-bar {
+    //     bottom: 5px;
+    //     //height: 3px;
+    //   }
 
-//     a {
-//         color: rgba(0, 0, 0, 1);
-//         //transition: color .3s;
-//         display: block;
-//         text-overflow: ellipsis;
-//         overflow: hidden;
-//     }
+    //   /deep/ .el-tabs__item {
+    //     height: 50px;
+    //     line-height: 50px;
+    //     font-weight: 600;
+    //   }
 
-//     a:hover {
-//         color: @hover_color;
-//     }
-// }
+    //   .list-left {
+    //     width: 860px;
 
-.page {
-    padding-top: 60px;
-}
+    //     /deep/ .el-tabs__content {
+    //       height: auto;
+    //       //background-color: #d2d3d4;
+    //     }
+    //   }
 
-.news-banner {
-    width: 100%;
-    height: 280px;
-    background: url("../../assets/img/news/newsbanner.jpg") 50% no-repeat;
-    background-size: cover;
-    text-align: center;
-    padding-top: 70px;
+    //   .el-pagination {
+    //     display: flex;
+    //     justify-content: center;
+    //     margin-top: 30px;
+    //     margin-bottom: 50px;
+    //   }
 
-    .banner-title {
-        padding-bottom: 30px;
+    //   .list-right {
+    //     margin-left: 50px;
 
-        h2 {
-            font-size: 40px;
-            line-height: 60px;
-            font-weight: 600;
-        }
+    //     .search-by-date {
+    //       //padding: 6px 0;
+    //       display: flex;
+    //       height: 50px;
+    //       align-items: center;
+    //       justify-content: flex-end;
+    //       font-size: 14px;
+    //       margin-bottom: 25px;
 
-        h3 {
-            color: #828282;
-            margin-top: 5px;
-            font-size: 100%;
-            font-weight: 400;
-            font-variant: normal;
-        }
-    }
+    //       p {
+    //         white-space: nowrap;
+    //         position: relative;
+    //         //right: -30px;
+    //       }
 
-    .search-news {
-        width: 46%;
+    //       .el-date-editor.el-input {
+    //         width: 160px;
+    //       }
 
-        .el-input__icon {
-            line-height: 46px;
-            font-size: 16px;
-        }
-    }
+    //       /deep/ .el-input__inner {
+    //         width: 160px;
+    //         height: 30px;
+    //         line-height: 30px;
+    //       }
 
-    /deep/ .el-input__inner {
-        height: 46px;
-        line-height: 46px;
-        border-radius: 30px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
-    }
+    //       /deep/ .el-input__prefix, /deep/ .el-input__suffix {
+    //         top: -4px;
+    //       }
+
+    //       ///deep/ .el-input__suffix{
+    //       //  right: 50px;
+    //       //}
+    //     }
+
+    //     /deep/ .el-card__body {
+    //       padding-top: 0;
+    //     }
+
+    //   }
 }
 </style>
