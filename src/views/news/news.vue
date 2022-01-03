@@ -93,44 +93,52 @@ export default {
 
         // 新闻列表页码切换
         handleCurrentChange(val) {
-            // console.log(`当前页: ${val}`)
+
             this.getNewsItems()
             document.body.scrollTop = document.documentElement.scrollTop = 700;
         },
 
         // 新闻列表按照日期查询
         searchByDate(data) {
-            // console.log(data)
-            this.getNewsItems()
+            let year = this.pageInfo.selectDate.split('-')[0]
+            let month = this.pageInfo.selectDate.split('-')[1]
+            this.getNewsItems(year, month)
         },
 
 
-        async getNewsItems() {
+        async getNewsItems(year = '', month = '') {
+            console.log(year)
+            console.log(month)
+            let res = ''
+
+            if (year.length === 0) {
+                res = await this.$http.get('/article/searchByTime', { params: this.pageInfo })
+            } else {
+                res = await this.$http.get(`/article/searchByDate?pageNum=${this.pageInfo.pageNum}&pageSize=14&year=${year}&month=${month}&day`)
+            }
 
 
 
             // const { data: res } = await this.$http.get('/web/newslist', { params: this.pageInfo })
-            let res = await this.$http.get('/article/searchByTime', { params: this.pageInfo })
 
 
             // let res = await this.$http.get('http://106.15.42.201:8900/article/searchByTime?pageNum=1&pageSize=14&time=7')
 
             if (res.status !== 200) {
-                console.log(res)
                 this.newsItems = {}
             } else {
                 // this.$message.success('获取成功')
                 let tempNewsItems = res.data.data
-                // console.log(tempNewsItems)
 
                 let fixedList = []
                 tempNewsItems.records.map((value, index) => {
                     let tempListData = {}
-                    tempListData.cover_img = 'https://xanadu.aerowang.cn/server/static/upload/20211023/16349529030189971.jpg'
+                    // tempListData.cover_img = 'https://xanadu.aerowang.cn/server/static/upload/20211023/16349529030189971.jpg'
+                    tempListData.cover_img = require('../../assets/img/news/face.png')
 
                     tempListData.news_desc = value.articleTitle
 
-                    // console.log(a.spl)
+
                     let guanyuIndex = value.articleTitle.indexOf('于');
                     if (guanyuIndex != -1) {
                         tempListData.news_desc = value.articleTitle.slice(guanyuIndex + 1)
@@ -143,7 +151,7 @@ export default {
                     tempListData.state = true
                     tempListData.type = 1
                     tempListData.update_time = value.publish_time
-                    // console.log(tempListData)
+
                     fixedList.push(tempListData)
                 })
 
@@ -153,7 +161,6 @@ export default {
                     list: fixedList
                 }
 
-                // console.log(this.newsItems)
                 if (this.newsItems.total <= this.newsItems.limit) {
                     this.singlePage = true
                 }

@@ -11,7 +11,7 @@
                                  :fetch-suggestions="querySearchAsync" placeholder="请输入新闻关键词" :trigger-on-focus="false">
                     <i slot="prefix" class="el-input__icon el-icon-search"></i>
                     <template slot-scope="{ item }">
-                        <router-link to="/">
+                        <router-link :to="`/newsDetail?index=${item.newsId}`">
                             <div class="name" v-html="item.newsTitle"></div>
                         </router-link>
                     </template>
@@ -45,6 +45,7 @@ export default {
                 for (const iterator of record) {
                     let tempData = {}
                     tempData.newsTitle = iterator.articleTitle
+                    tempData.newsId = iterator.articleId
                     this.searchList.push(tempData)
                 }
             }
@@ -52,6 +53,9 @@ export default {
             this.searchList.forEach(item => {
                 item.newsTitle = item.newsTitle.replace(queryString, newHtml)
             })
+
+            console.log(this.searchList)
+
             clearTimeout(this.timeout)
             this.timeout = setTimeout(() => {
                 console.log(this.searchList)

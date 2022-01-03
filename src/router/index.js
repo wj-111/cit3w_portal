@@ -52,5 +52,9 @@ export default new Router({
             name: 'index',
             redirect: '/'
         }
-    ]
+    ],
+    scrollBehavior(to, from, savedPosition) {
+        return { x: 0, y: 0 }
+    }
+
 })

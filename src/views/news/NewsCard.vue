@@ -4,7 +4,7 @@
             <router-link to="/">
                 <div class="news-card-item">
                     <!-- <img :src="item.cover_img" alt=""> -->
-                    <img src="https://xanadu.aerowang.cn/server/static/upload/20211023/16349529030189971.jpg" alt="">
+                    <img :src="item.img">
 
                     <p class="item-mask"><span>{{ item.title }}</span></p>
                     <!-- <p class="item-mask"><span>{{ item.news_title }}</span></p> -->
@@ -16,15 +16,16 @@
 </template>
 
 <script>
+
 export default {
     name: "news",
     data() {
         return {
             recomNews: [
-                { title: '1' },
-                { title: '2' },
-                { title: '3' },
-                { title: '4' },
+                { title: '我校2019年立项省教改课题顺利通过结题验收', img: require('../../assets/img/news/1.png') },
+                { title: '我校顺利完成2021年第二批新增学士学位授权专业审核工作', img: require('../../assets/img/news/2.png') },
+                { title: '学校举办第二期虚拟仿真实验教学项目培训会', img: require('../../assets/img/news/3.png') },
+                { title: '校长汤正华率团参加长三角现代产业学院建设高峰论坛暨长三角现代产业学院协同育人联盟成立大会', img: require('../../assets/img/news/4.png') },
             ]
         };
     },

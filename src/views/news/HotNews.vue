@@ -5,7 +5,7 @@
             <li class="hot-list-item" v-for="(item,index) in hotNews" :key="index">
                 <span class="num-top">{{ index + 1 }}</span>
                 <p>
-                    <router-link :to="`/news/${item.news_path}`">{{ item.articleTitle }}</router-link>
+                    <router-link :to="`/newsDetail?index=${item.news_path}`">{{ item.articleTitle }}</router-link>
                     <span class="hot-date">{{ item.articlePubtime }}</span>
                 </p>
             </li>
@@ -47,14 +47,48 @@ export default {
             //     time: 30
             //   }
             // })
-            const paramsValue = {
-                pageNum: 1,
-                pageSize: 5,
-                time: 30
+            // const paramsValue = {
+            //     pageNum: 1,
+            //     pageSize: 5,
+            //     time: 30
+            // }
+            // const { data: res } = await this.$http.get('http://49.234.3.127:8081/article/searchByTime', {
+            //     params: paramsValue
+            // })
+            const pageInfo = {
+                activeName: '1',
+                // 当前页码
+                pageNum: 2,
+                // 当前每页显示多少条数据
+                pageSize: 14,
+                time: 30,
+                selectDate: ''
             }
-            const { data: res } = await this.$http.get('http://49.234.3.127:8081/article/searchByTime', {
-                params: paramsValue
-            })
+            let res = await this.$http.get('/article/searchByTime', { params: this.pageInfo })
+
+
+            if (res.status !== 200) {
+                console.log(res)
+                this.newsItems = {}
+            } else {
+                // this.$message.success('获取成功')
+                let tempNewsItems = res.data.data
+
+
+                let fixedList = []
+                tempNewsItems.records.map((value, index) => {
+                    let tempListData = {}
+                    tempListData.articleTitle = value.articleTitle
+                    tempListData.news_path = value.articleId
+                    tempListData.articlePubtime = value.publish_time
+                    // console.log(tempListData)
+                    fixedList.push(tempListData)
+                })
+
+
+                this.hotNews = fixedList
+
+            }
             // this.$axios({
             //    url: '/api/user/login' ,
             //    method: 'post',
@@ -75,7 +109,6 @@ export default {
             //    }
             //  }).then((res) =&gt; {
             //  console.log(res)
-            this.hotNews = res.data.records
             // if (res.status !== 200) {
             //   this.hotNews = []
             // } else {
