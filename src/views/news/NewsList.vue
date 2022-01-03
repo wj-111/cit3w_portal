@@ -3,8 +3,8 @@
         <ul class="news-list-items" v-if="items!==undefined">
             <li class="news-list-item" v-for="(item,index) in items" :key="index">
                 <el-card shadow="hover">
-                    <router-link :to="`/news/${item.news_path}`">
-                        <!--<div class = "item-mask"></div>-->
+                    <router-link :to="`/newsDetail?index=${item.news_path}`">
+                        <!-- <router-link :to="`/newsDetail/${item.news_path}`"> -->
                         <img :src="item.cover_img" alt="">
                         <div class="item-content">
                             <h2>{{ item.news_title }}</h2>
