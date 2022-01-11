@@ -43,6 +43,11 @@ export default new Router({
             component: () => import(/* webpackChunkName: "recruitment" */ '../views/recruitment/recruitment.vue')
         },
         {
+            path: '/todoList',
+            name: 'todoList',
+            component: () => import(/* webpackChunkName: "todoList" */ '../views/todoList/todoList.vue')
+        },
+        {
             path: '/messageBoard',
             name: 'messageBoard',
             component: () => import(/* webpackChunkName: "messageBoard" */ '../views/messageBoard/messageBoard.vue')

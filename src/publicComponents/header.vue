@@ -49,6 +49,10 @@ export default {
                     path: '/recruitment'
                 },
                 {
+                    title: '计划表',
+                    path: '/todoList'
+                },
+                {
                     title: '留言板',
                     path: '/messageBoard'
                 }
