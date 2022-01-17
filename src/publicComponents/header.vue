@@ -4,8 +4,7 @@
             <div class="header_content">
                 <div class="logo">
                     <router-link to="/">
-                        <img :src="logo_img[0].path" alt="logo" v-if="headerLogoShow===true" />
-                        <img :src="logo_img[1].path" alt="logo" v-else />
+                        <img :src="logo_img[0].path" alt="logo" />
                     </router-link>
                 </div>
                 <div class="menu-wrapper">
@@ -22,6 +21,8 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
     name: 'Header',
     data() {
@@ -59,14 +60,37 @@ export default {
             ],
             logo_img: [
                 {
-                    path: require('../assets/img/index/logo.png')
-                },
-                {
                     path: require('../assets/img/index/logoColor.png')
                 }
             ]
         };
     },
+    computed: mapState(['headerShadowActive', 'headerShow', 'navDarkActive']),
+    mounted() {
+        // console.log(this.$route.path)
+        // 在不同页面有不同的表现，顶部为白的设置为黑字模糊底，其他设置为白字透明底。
+        switch (this.$route.path) {
+            case '/':
+            case '/index':
+            case '/aboutUs':
+                this.$store.commit('setShadowActive', {
+                    headerShadowActive: false
+                })
+                this.$store.commit('setNavDarkActive', {
+                    navDarkActive: false
+                })
+                break;
+            default:
+                this.$store.commit('setShadowActive', {
+                    headerShadowActive: true
+                })
+                this.$store.commit('setNavDarkActive', {
+                    navDarkActive: true
+                })
+                break;
+        }
+
+    }
 };
 </script>
 
@@ -99,6 +123,7 @@ h2 {
 
 .shadow {
     background-color: rgba(255, 255, 255, 0.7);
+    /* 滤镜模糊 */
     backdrop-filter: blur(8px);
     box-shadow: 0 1px 8px 0 rgba(0, 0, 0, 0.1);
 }
