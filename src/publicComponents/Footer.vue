@@ -10,7 +10,11 @@
                     </div>
                 </div>
                 <h2>© 2020-2021 CIT 3W&nbsp;技术型社团</h2>
-                <h2>X公网安备 <a class="to_gong_an" href="http://beian.miit.gov.cn/" target="_blank">xxxxxxxxxxxxxx</a>号 I 苏ICP备2021035160号-1</h2>
+                <h2>
+                    公网安备<a class="to_gong_an" href="http://www.beian.gov.cn/" target="_blank">32041102000871号</a>
+                    <br>
+                    苏ICP备<a class="to_gong_an" href="http://beian.miit.gov.cn/" target="_blank">2021035160号-1</a>
+                </h2>
             </div>
 
             <div class="about_us footer-content-column">

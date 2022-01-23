@@ -23,6 +23,8 @@ npm run build --report
 2021.11.20: 
 npm i sass-resources-loader -D
 
+2022.1.11:
+npm install --save vuex
 
 
 

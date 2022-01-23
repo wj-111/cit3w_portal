@@ -2,12 +2,11 @@
     <div class="banner">
         <div class="Limit">
             <!-- 走马灯 -->
-            <el-carousel :interval="10000" arrow="hover" :height="BannerHeight+ 'px' " :autoplay="true" ref="carousel" trigger="click" indicator-position="none">
+            <el-carousel :interval="10000" arrow="hover" :height="BannerHeight+ 'px' " :autoplay="true" trigger="click" indicator-position="none">
                 <el-carousel-item v-for="item in imgList" :key="item.id">
                     <div class="img_con">
                         <div class="img_cover"></div>
                         <img class="element-img" alt="" :src="item.imgUrl">
-                        <!-- <img class = "element-img" alt = "" src = "/static/school.jpg"> -->
                     </div>
                 </el-carousel-item>
             </el-carousel>
@@ -18,9 +17,9 @@
 <script>
 export default {
     name: 'Banner',
-    props: ['BannerHeight'],
     data() {
         return {
+            BannerHeight: 722,
             imgList: [
                 {
                     id: 0,
@@ -30,40 +29,18 @@ export default {
                     id: 1,
                     imgUrl: require('../../assets/img/index/image2.jpg')
                 }
-                // ,{
-                //   id: 2,
-                //   imgUrl: 'https://cdn.jsdelivr.net/gh/xanaduwang/aerowang/img/20210604161757.png'
-                // },
-                // {
-                //   id: 3,
-                //   imgUrl: 'https://cdn.jsdelivr.net/gh/xanaduwang/aerowang/img/20210604161818.jpg'
-                // },
-                // {
-                //   id: 4,
-                //   imgUrl: 'https://cdn.jsdelivr.net/gh/xanaduwang/aerowang/img/20210604161834.jpg'
-                // },
-                // {
-                //   id: 5,
-                //   imgUrl: 'https://cdn.jsdelivr.net/gh/xanaduwang/aerowang/img/20210604161353.jpg'
-                // }
             ]
         }
     },
     methods: {
         setBannerHeight() {
             this.BannerHeight = window.innerHeight
-            // 接管组件公用数据
-            // index 与 Header 组件 共用 BannerHeight
-            // this.$store.commit('setBannerHeight', {
-            //     bannerHeight: this.BannerHeight
-            // })
         },
     },
     mounted() {
-        // 页面创建时执行一次getHeight进行赋值，顺道绑定resize事件
-        window.addEventListener('resize', this.setBannerHeight)
+        // 页面创建时执行一次setBannerHeight进行赋值，顺道绑定resize事件
         this.setBannerHeight()
-        // window.addEventListener('scroll', this.scrollHandle) // 绑定页面的滚动事件(控制AwHeader)
+        window.addEventListener('resize', this.setBannerHeight)
     },
 }
 </script>
