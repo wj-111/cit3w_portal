@@ -21,7 +21,7 @@ export default new Vuex.Store({
         setHeaderShow(state, value) {
             state.headerShow = value.headerShow
         },
-        // 是否展现header
+        // 字体颜色是否为黑
         setNavDarkActive(state, value) {
             state.navDarkActive = value.navDarkActive
         }

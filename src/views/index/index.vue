@@ -3,7 +3,13 @@
         <AwHeader class="aboutUs_header"></AwHeader>
         <Banner></Banner>
         <OverLay></OverLay>
-        <ServerComponent></ServerComponent>
+        <div class="down-icon" v-if="scrollTop < 120" @click="scrollToContent()">
+            <img src="../../assets/img/icon/down.png" style="width: 50px;height: 50px;line-height:100px;">
+        </div>
+        <div ref="content">
+            <ServerComponent></ServerComponent>
+        </div>
+
         <AwFooter></AwFooter>
     </div>
 </template>
@@ -31,6 +37,11 @@ export default {
         };
     },
     methods: {
+        scrollToContent() {
+            this.$refs.content.scrollIntoView({
+                behavior: 'smooth'
+            })
+        },
         getInnerHeight() {
             this.innerHeight = window.innerHeight
         },
@@ -96,7 +107,33 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang = "less" scoped>
+.down-icon {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    width: 100px;
+    padding: 30px 0;
+    text-align: center;
+    z-index: 100;
+    animation: dropdown 2s linear infinite alternate;
+}
+
+@keyframes dropdown {
+    0% {
+        bottom: 0px;
+    }
+    /** 暂停效果 */
+    50% {
+        bottom: 5px;
+    }
+    100% {
+        bottom: 10px;
+    }
+}
+
 .page {
     padding-top: 60px;
 }
