@@ -182,10 +182,10 @@ export default {
         culture3: require("../../assets/img/culture/3.jpg"),
         culture4: require("../../assets/img/culture/4.jpg"),
         team1: require('../../assets/img/teams/1.png'),
-        Honors1: require('../../assets/img/honors/1.png'),
-        Honors2: require('../../assets/img/honors/2.png'),
-        Honors3: require('../../assets/img/honors/3.png'),
-        Honors4: require('../../assets/img/honors/4.png')
+        Honors1: require('../../assets/img/honors/11.jpg'),
+        Honors2: require('../../assets/img/honors/22.jpg'),
+        Honors3: require('../../assets/img/honors/33.jpg'),
+        Honors4: require('../../assets/img/honors/66.png')
 
       },
       profileText:
